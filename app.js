@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('express-method-override');
 var expressSanitizer = require('express-sanitizer');
+var nl2br = require('nl2br');
 var app = express();
 
 mongoose.connect('mongodb://localhost/blog', {
@@ -63,6 +64,7 @@ app.get("/blogs/:id", function(req, res) {
 			console.log("Error: " + err);
 			redirect("/blogs");
 		} else {
+			blogFound.body = nl2br(blogFound.body);
 			res.render("show", {blog: blogFound});
 		}
 	});
